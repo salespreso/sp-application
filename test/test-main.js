@@ -1,6 +1,7 @@
 import Promise from "bluebird";
 import _ from "lodash";
 import { Log, LogLevel } from "sp-log";
+import "babel/polyfill";
 
 Log.setAllLevels(LogLevel.SILENT);
 
