@@ -1,6 +1,6 @@
 {
   "registry": "jspm",
-  "name": "application",
+  "name": "sp-application",
   "version": "0.0.1",
   "description": "",
   "repository": "salespreso/application",
