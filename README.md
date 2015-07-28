@@ -19,6 +19,7 @@ import {
         - [`Decorators.application([String value])`](#decoratorsapplicationstring-value-function)
   - [application.register](#applicationregister)
     - [`Register`](#register-applicationregister)
+        - [`Register.unregister(String name)`](#registerunregisterstring-name)
         - [`Register.import((string|string[]) paths)`](#registerimportstring|string-paths-promise)
         - [`Register.get(String name)`](#registergetstring-name)
         - [`Register.register(String name, Function module)`](#registerregisterstring-name-function-module)
@@ -178,6 +179,31 @@ applications and middleware on startup.
 
 
 ##### **Methods**
+#### `Register.unregister(String name)`
+Unregister a module
+
+<br/>
+
+###### **Params**
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Parameter</th>
+      <th width="70%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>String</td>
+    <td><code>name</code></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+
+<br/>
 #### `Register.import((string|string[]) paths) -> Promise`
 Dynamically loads a module
 
