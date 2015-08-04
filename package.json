@@ -32,7 +32,8 @@
       "babel-runtime": "npm:babel-runtime@^5.1.13",
       "bluebird": "npm:bluebird@^2.9.34",
       "core-js": "npm:core-js@^0.9.4",
-      "lodash": "npm:lodash@^3.10.0"
+      "lodash": "npm:lodash@^3.10.0",
+      "react-router": "npm:react-router@^1.0.0-beta3"
     }
   }
 }
