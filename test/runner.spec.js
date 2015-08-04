@@ -47,6 +47,13 @@ describe("ApplicationRunner", () => {
 			assert.equal(routes[0].props.children[0].props.path, "app2");
 			assert.equal(routes[0].props.children[0], app2Route);
 		});
+
+		it("should remove any unused routes", () => {
+			class App1 {}
+			ApplicationRunner.add("app1", App1);
+			let routes = ApplicationRunner.createRoutes();
+			assert.equal(routes.length, 0);
+		});
 	});
 
 	describe("#createStore", () => {
@@ -88,6 +95,13 @@ describe("ApplicationRunner", () => {
 			ApplicationRunner.add("app2", App2);
 			let facets = ApplicationRunner.createFacets();
 			assert.deepEqual(facet.foo, facets["app1.app2.foo"]);
+		});
+
+		it("should remove any unused facets", () => {
+			class App1 {}
+			ApplicationRunner.add("app1", App1);
+			let facets = ApplicationRunner.createFacets();
+			assert.equal(Object.keys(facets).length, 0);
 		});
 	});
 });
