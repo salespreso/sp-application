@@ -53,6 +53,7 @@ describe("ApplicationRunner", () => {
 	describe("#createStore", () => {
 		it("should create a single list of stores", () => {
 			class App1 { static get store() { return { foo: true }; } }
+			@parent("app1")
 			class App2 { static get store() { return { bar: true }; } }
 
 			ApplicationRunner.add("app1", App1);
@@ -61,7 +62,7 @@ describe("ApplicationRunner", () => {
 			let store = ApplicationRunner.createStore();
 			assert.deepEqual(store, {
 				app1: { foo: true },
-				app2: { bar: true }
+				["app1.app2"]: { bar: true }
 			});
 		});
 	});
