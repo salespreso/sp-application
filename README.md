@@ -13,6 +13,7 @@ import {
   - [`Application`](#application)
     - [`Application.store()`](#applicationstore-object|promise)
     - [`Application.routes()`](#applicationroutes-object|promise)
+    - [`Application.facets()`](#applicationfacets-object|promise)
   - [application.decorators](#applicationdecorators)
     - [`Decorators`](#decorators-applicationdecorators)
         - [`Decorators.parent(String value)`](#decoratorsparentstring-value-function)
@@ -27,6 +28,8 @@ import {
     - [`ApplicationRunner`](#applicationrunner-applicationrunner)
         - [`ApplicationRunner.registered`](#applicationrunnerregistered)
         - [`ApplicationRunner.add(String name, Application module)`](#applicationrunneraddstring-name-application-module)
+        - [`ApplicationRunner.remove(String name)`](#applicationrunnerremovestring-name)
+        - [`ApplicationRunner.createFacets()`](#applicationrunnercreatefacets-object)
         - [`ApplicationRunner.createRoutes()`](#applicationrunnercreateroutes-reactelement)
         - [`ApplicationRunner.createStore()`](#applicationrunnercreatestore-object)
   - [application.util](#applicationutil)
@@ -82,6 +85,27 @@ Route definition to be converted to the application routes.
 <Route name="foo" handler={Foo} path="/">
  <Route name="foo-detail" handler={FooDetail} path=":id" />
 </Route>
+```
+<br/>
+#### `Application.facets() -> Object|Promise`
+Route definition to be converted to the application routes.
+
+###### **Returns** `Object|Promise`
+<br/>
+
+###### Example
+```javascript
+{
+  facetName: {
+    cursors: {
+      myCursor: ["myCursor"]
+    },
+    get(data) {
+      // Change response of cursor here
+      return data.myCursor;
+    }
+  }
+}
 ```
 
 ***
@@ -325,6 +349,38 @@ Register a plugin
   </tr>
   </tbody>
 </table>
+
+<br/>
+#### `ApplicationRunner.remove(String name)`
+
+
+<br/>
+
+###### **Params**
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Parameter</th>
+      <th width="70%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>String</td>
+    <td><code>name</code></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+
+<br/>
+#### `ApplicationRunner.createFacets() -> Object`
+
+
+###### **Returns** `Object`
+
 
 <br/>
 #### `ApplicationRunner.createRoutes() -> ReactElement[]`
