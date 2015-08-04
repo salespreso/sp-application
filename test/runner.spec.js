@@ -3,7 +3,6 @@ import {Route} from "react-router";
 import {parent} from "lib/decorators";
 import {ApplicationRunner} from "lib/runner";
 
-
 describe("ApplicationRunner", () => {
 	beforeEach(() => {
 		for (let key in ApplicationRunner.registered) {
@@ -64,6 +63,31 @@ describe("ApplicationRunner", () => {
 				app1: { foo: true },
 				["app1.app2"]: { bar: true }
 			});
+		});
+	});
+
+	describe("#createFacets", () => {
+		it("should create a namespaced facet", () => {
+			let facet = { foo: { cursors: [], get() {} } };
+			class App1 {
+				static get facets() { return facet; }
+			}
+			ApplicationRunner.add("app1", App1);
+			let facets = ApplicationRunner.createFacets();
+			assert.deepEqual(facet.foo, facets["app1.foo"]);
+		});
+
+		it("should namespace a parented app", () => {
+			let facet = { foo: { cursors: [], get() {} } };
+			class App1 {}
+			@parent("app1")
+			class App2 {
+				static get facets() { return facet; }
+			}
+			ApplicationRunner.add("app1", App1);
+			ApplicationRunner.add("app2", App2);
+			let facets = ApplicationRunner.createFacets();
+			assert.deepEqual(facet.foo, facets["app1.app2.foo"]);
 		});
 	});
 });
