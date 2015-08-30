@@ -14,7 +14,8 @@
   "dependencies": {},
   "devDependencies": {
     "get-port": "^1.0.0",
-    "karma-config": "*",
+    "jspm": "^0.16.2",
+    "karma-config": "^1.0.0",
     "live-server": "*",
     "yuidoc2md": "^0.8.1"
   },
@@ -28,10 +29,10 @@
       "sp-log": "npm:sp-log@^1.1.7"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "babel": "npm:babel-core@^5.8.22",
+      "babel-runtime": "npm:babel-runtime@^5.8.20",
       "bluebird": "npm:bluebird@^2.9.34",
-      "core-js": "npm:core-js@^0.9.4",
+      "core-js": "npm:core-js@^1.1.0",
       "lodash": "npm:lodash@^3.10.0",
       "react-router": "npm:react-router@^1.0.0-beta3"
     }
