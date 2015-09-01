@@ -7,16 +7,16 @@
   "scripts": {
     "test": "node_modules/.bin/karma start --single-run --port=`get-port`",
     "test:continuous": "node_modules/.bin/karma start --port=`get-port`",
-    "watch": "live-server --no-browser --port=`get-port`",
+    "examples": "example-server --port=`get-port`",
     "docs": "yuidoc2md \"lib/**/*.js\" > README.md"
   },
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
+    "example-server": "0.0.2",
     "get-port": "^1.0.0",
     "jspm": "^0.16.2",
     "karma-config": "^1.0.0",
-    "live-server": "*",
     "yuidoc2md": "^0.8.1"
   },
   "jspm": {

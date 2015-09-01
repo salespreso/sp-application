@@ -1,7 +1,6 @@
 System.config({
   defaultJSExtensions: true,
   transpiler: "babel",
-  baseURL: (typeof __karma__ !== "undefined") ? "base" : "/",
   babelOptions: {
     "blacklist": [],
     "optional": [
