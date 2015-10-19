@@ -44,8 +44,9 @@ describe("ApplicationRunner", () => {
 			ApplicationRunner.add("app2", App2);
 
 			let routes = ApplicationRunner.createRoutes();
+			assert.equal(routes.length, 1);
 			assert.equal(routes[0].props.children[0].props.path, "app2");
-			assert.equal(routes[0].props.children[0], app2Route);
+			assert.deepEqual(routes[0].props.children[0].props, app2Route.props);
 		});
 
 		it("should remove any unused routes", () => {

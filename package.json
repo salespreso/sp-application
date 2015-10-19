@@ -13,9 +13,9 @@
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
-    "example-server": "0.0.2",
+    "example-server": "0.0.4",
     "get-port": "^1.0.0",
-    "jspm": "^0.16.2",
+    "jspm": "^0.16.12",
     "karma-config": "^1.0.0",
     "yuidoc2md": "^0.8.1"
   },
@@ -25,16 +25,16 @@
       "lib": "lib"
     },
     "dependencies": {
-      "react": "npm:react@0.13",
-      "sp-log": "npm:sp-log@^1.1.7"
+      "react": "npm:react@^0.14.0",
+      "sp-log": "npm:sp-log@^1.1.8"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.22",
-      "babel-runtime": "npm:babel-runtime@^5.8.20",
-      "bluebird": "npm:bluebird@^2.9.34",
-      "core-js": "npm:core-js@^1.1.0",
-      "lodash": "npm:lodash@^3.10.0",
-      "react-router": "npm:react-router@^1.0.0-beta3"
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "bluebird": "npm:bluebird@^2.10.2",
+      "core-js": "npm:core-js@^1.1.4",
+      "lodash": "npm:lodash@^3.10.1",
+      "react-router": "npm:react-router@^1.0.0-rc3"
     }
   }
 }
