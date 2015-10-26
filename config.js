@@ -16,6 +16,7 @@ System.config({
   map: {
     "babel": "npm:babel-core@5.8.25",
     "babel-runtime": "npm:babel-runtime@5.8.25",
+    "baobab": "npm:baobab@2.1.0",
     "bluebird": "npm:bluebird@2.10.2",
     "core-js": "npm:core-js@1.2.2",
     "lodash": "npm:lodash@3.10.1",
@@ -61,6 +62,9 @@ System.config({
     },
     "npm:babel-runtime@5.8.25": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:baobab@2.1.0": {
+      "emmett": "npm:emmett@3.1.1"
     },
     "npm:bluebird@2.10.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"

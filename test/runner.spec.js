@@ -73,36 +73,4 @@ describe("ApplicationRunner", () => {
 			});
 		});
 	});
-
-	describe("#createFacets", () => {
-		it("should create a namespaced facet", () => {
-			let facet = { foo: { cursors: {}, get() {} } };
-			class App1 {
-				static get facets() { return facet; }
-			}
-			ApplicationRunner.add("app1", App1);
-			let facets = ApplicationRunner.createFacets();
-			assert.deepEqual(facet.foo, facets["app1.foo"]);
-		});
-
-		it("should namespace a parented app", () => {
-			let facet = { foo: { cursors: {}, get() {} } };
-			class App1 {}
-			@parent("app1")
-			class App2 {
-				static get facets() { return facet; }
-			}
-			ApplicationRunner.add("app1", App1);
-			ApplicationRunner.add("app2", App2);
-			let facets = ApplicationRunner.createFacets();
-			assert.deepEqual(facet.foo, facets["app1.app2.foo"]);
-		});
-
-		it("should remove any unused facets", () => {
-			class App1 {}
-			ApplicationRunner.add("app1", App1);
-			let facets = ApplicationRunner.createFacets();
-			assert.equal(Object.keys(facets).length, 0);
-		});
-	});
 });

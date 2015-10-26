@@ -2,6 +2,7 @@ import React from "react";
 import {Route} from "react-router";
 import {ApplicationRunner} from "lib/runner";
 import {parent, application} from "lib/decorators";
+import {monkey} from "baobab";
 
 import {Log} from "sp-log";
 let log = Log("example");
@@ -20,24 +21,21 @@ class ParentApp {
 			bar: false,
 			baz: {
 				hello: true
-			}
-		};
-	}
-
-	static get facets() {
-		return {
-			foo: {
+			},
+			aCursor: monkey({
 				cursors: [],
 				get() {
 					return "hello";
 				}
-			},
-			another: {
-				cursors: ["hello"],
-				get() {
-					return "nothello";
+			}),
+			another: monkey({
+				cursors: {
+					foo: ["foo"]
+				},
+				get(data) {
+					return data.foo;
 				}
-			}
+			})
 		};
 	}
 }
@@ -56,22 +54,18 @@ class ChildApp {
 			testStore: {
 				foo: true,
 				bar: "baz"
-			}
-		};
-	}
-
-	static get facets() {
-		return {
-			hai: {
-				cursors: ["hai"],
-				get() {
-					return "hai";
+			},
+			hai: monkey({
+				cursors: {
+					foo: ["testStore", "foo"]
+				},
+				get(data) {
+					return data.foo;
 				}
-			}
+			})
 		};
 	}
 }
 
 log.info(`routes: ${JSON.stringify(ApplicationRunner.createRoutes(), null, 2)}`);
-log.info(`facets: ${JSON.stringify(ApplicationRunner.createFacets(), null, 2)}`);
 log.info(`stores: ${JSON.stringify(ApplicationRunner.createStore(), null, 2)}`);
