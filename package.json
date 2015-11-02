@@ -5,6 +5,7 @@
   "description": "",
   "repository": "salespreso/application",
   "scripts": {
+    "lint": "eslint -c .eslintrc --quiet --cache lib",
     "test": "node_modules/.bin/karma start --single-run --port=`get-port`",
     "test:continuous": "node_modules/.bin/karma start --port=`get-port`",
     "examples": "example-server --port=`get-port`",
@@ -13,8 +14,10 @@
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
+    "eslint-config-salespreso": "^0.1.4",
     "example-server": "0.0.4",
     "get-port": "^1.0.0",
+    "git-hooks": "^1.0.2",
     "jspm": "^0.16.12",
     "karma-config": "^1.0.0",
     "yuidoc2md": "^0.8.1"
