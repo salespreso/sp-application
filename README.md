@@ -11,8 +11,9 @@ import {
 
 ## API Reference
   - [`Application`](#application)
-    - [`Application.store()`](#applicationstore-object|promise)
-    - [`Application.routes()`](#applicationroutes-object|promise)
+    - [`Application.store()`](#applicationstore-object)
+    - [`Application.routes()`](#applicationroutes-object)
+    - [`Application.signals()`](#applicationsignals-object)
   - [application.decorators](#applicationdecorators)
     - [`Decorators`](#decorators-applicationdecorators)
         - [`Decorators.parent(String value)`](#decoratorsparentstring-value-function)
@@ -28,12 +29,12 @@ import {
         - [`ApplicationRunner.registered`](#applicationrunnerregistered)
         - [`ApplicationRunner.add(String name, Application module)`](#applicationrunneraddstring-name-application-module)
         - [`ApplicationRunner.remove(String name)`](#applicationrunnerremovestring-name)
-        - [`ApplicationRunner.createRoutes()`](#applicationrunnercreateroutes-reactelement)
+        - [`ApplicationRunner.createRoutes()`](#applicationrunnercreateroutes-object)
+        - [`ApplicationRunner.createSignals()`](#applicationrunnercreatesignals-object)
         - [`ApplicationRunner.createStore()`](#applicationrunnercreatestore-object)
   - [application.util](#applicationutil)
     - [`Util`](#util-applicationutil)
         - [`Util.extendClass(Function classA, Function classB)`](#utilextendclassfunction-classa-function-classb)
-        - [`Util.getChildrenWithContext(Object scope)`](#utilgetchildrenwithcontextobject-scope)
 
 ### `Application`
 > Defines the interface needed to connect new components/stores/routes etc.
@@ -59,30 +60,44 @@ class Foo {
 ```
 
 ##### **Methods**
-#### `Application.store() -> Object[]|Promise`
+#### `Application.store() -> Object`
 Variables to be added to the store
 
-###### **Returns** `Object[]|Promise`
+###### **Returns** `Object`
 <br/>
 
 ###### Example
 ```javascript
 {
- cursorName: "foo"
+ storeData: "foo"
 }
 ```
 <br/>
-#### `Application.routes() -> Object|Promise`
-Route definition to be converted to the application routes.
+#### `Application.routes() -> Object`
+Cerebral router signals paths
 
-###### **Returns** `Object|Promise`
+###### **Returns** `Object`
 <br/>
 
 ###### Example
 ```javascript
-<Route name="foo" handler={Foo} path="/">
- <Route name="foo-detail" handler={FooDetail} path=":id" />
-</Route>
+{
+  "/messages/": "messageList",
+  "/messages/:id/": "message"
+}
+```
+<br/>
+#### `Application.signals() -> Object`
+Signal/action pairings for cerebral and cerebral router
+
+###### **Returns** `Object`
+<br/>
+
+###### Example
+```javascript
+{
+  "action": [action1, action2, action3]
+}
 ```
 
 ***
@@ -353,10 +368,17 @@ Register a plugin
 </table>
 
 <br/>
-#### `ApplicationRunner.createRoutes() -> ReactElement[]`
+#### `ApplicationRunner.createRoutes() -> Object`
 
 
-###### **Returns** `ReactElement[]`
+###### **Returns** `Object`
+
+
+<br/>
+#### `ApplicationRunner.createSignals() -> Object`
+
+
+###### **Returns** `Object`
 
 
 <br/>
@@ -399,32 +421,6 @@ _.defaults in lodash for classes.
     <td>Function</td>
     <td><code>classB</code></td>
     <td>The class we&#x27;re copying</td>
-  </tr>
-  </tbody>
-</table>
-
-<br/>
-#### `Util.getChildrenWithContext(Object scope)`
-Displays children of a react component, passing along all of the parent&#x27;s contexts.
-This is not done in 0.13.x, but 0.14 will make this method unecessary.
-
-<br/>
-
-###### **Params**
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Parameter</th>
-      <th width="70%">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>Object</td>
-    <td><code>scope</code></td>
-    <td></td>
   </tr>
   </tbody>
 </table>

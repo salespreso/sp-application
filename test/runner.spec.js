@@ -1,5 +1,3 @@
-import React from "react";
-import {Route} from "react-router";
 import {parent} from "lib/decorators";
 import {ApplicationRunner} from "lib/runner";
 
@@ -23,41 +21,89 @@ describe("ApplicationRunner", () => {
 	});
 
 	describe("#createRoutes", () => {
-		it("should create a route from an application", () => {
-			let app1Route = (<Route path="app1" />);
-			class App1 { static get routes() { return app1Route; } }
-			ApplicationRunner.add("app1", App1);
-			let routes = ApplicationRunner.createRoutes();
-			assert.equal(routes[0], app1Route);
-			assert.equal(routes[0].props.path, "app1");
+		it("should throw an error if not returning an object", () => {
+			class App1 {static routes() { return {}; }}
+
+			const func = () => ApplicationRunner.add("app1", App1);
+			assert.throws(func, Error,
+				`Application app1 "routes" is not returning an object. Did you mean 'static get routes'?`
+			);
 		});
 
-		it("should nest a child in a parent application", () => {
-			let app1Route = (<Route path="app1" />);
-			let app2Route = (<Route path="app2" />);
-			class App1 { static get routes() { return app1Route; } }
+		it("should create a route from an application", () => {
+			const app1Route = {
+				"/app1/route1/": "route"
+			};
 
+			class App1 { static get routes() { return app1Route; } }
+			ApplicationRunner.add("app1", App1);
+			const routes = ApplicationRunner.createRoutes();
+			assert.deepEqual(routes, {
+				"/app1/route1/": "app1.route"
+			});
+		});
+
+		it("should nest child signals under parent", () => {
+			const app1Route = {"/app1/route1/": "route1"};
+			const app2Route = {"/app2/route1/": "route2"};
+
+			class App1 { static get routes() { return app1Route; } }
 			@parent("app1")
 			class App2 { static get routes() { return app2Route; } }
 
 			ApplicationRunner.add("app1", App1);
 			ApplicationRunner.add("app2", App2);
 
-			let routes = ApplicationRunner.createRoutes();
-			assert.equal(routes.length, 1);
-			assert.equal(routes[0].props.children[0].props.path, "app2");
-			assert.deepEqual(routes[0].props.children[0].props, app2Route.props);
+			const routes = ApplicationRunner.createRoutes();
+			assert.deepEqual(routes, {
+				"/app1/route1/": "app1.route1",
+				"/app2/route1/": "app1.app2.route2"
+			});
 		});
 
 		it("should remove any unused routes", () => {
 			class App1 {}
 			ApplicationRunner.add("app1", App1);
-			let routes = ApplicationRunner.createRoutes();
-			assert.equal(routes.length, 0);
+			const routes = ApplicationRunner.createRoutes();
+			assert.deepEqual(routes, {});
+		});
+	});
+
+	describe("#createSignals", () => {
+		it("should throw an error if not returning an object", () => {
+			class App1 { static signals() { return {}; } }
+
+			const func = () => ApplicationRunner.add("app1", App1);
+			assert.throws(func, Error,
+				`Application app1 "signals" is not returning an object. Did you mean 'static get signals'?`
+			);
+		});
+
+		it("should create an app-prefixed object of signals", () => {
+			function action() {}
+			const signalObj = {
+				signal1: [action]
+			};
+			class App1 { static get signals() { return signalObj; } }
+			ApplicationRunner.add("app1", App1);
+
+			const signals = ApplicationRunner.createSignals();
+			assert.deepEqual(signals, {
+				"app1.signal1": [action]
+			});
 		});
 	});
 
 	describe("#createStore", () => {
+		it("should throw an error if not returning an object", () => {
+			class App1 {static store() { return {}; }}
+
+			const func = () => ApplicationRunner.add("app1", App1);
+			assert.throws(func, Error,
+				`Application app1 "store" is not returning an object. Did you mean 'static get store'?`
+			);
+		});
+
 		it("should create a single list of stores", () => {
 			class App1 { static get store() { return { foo: true }; } }
 			@parent("app1")
@@ -66,10 +112,14 @@ describe("ApplicationRunner", () => {
 			ApplicationRunner.add("app1", App1);
 			ApplicationRunner.add("app2", App2);
 
-			let store = ApplicationRunner.createStore();
+			const store = ApplicationRunner.createStore();
 			assert.deepEqual(store, {
-				app1: { foo: true },
-				["app1.app2"]: { bar: true }
+				app1: {
+					foo: true,
+					app2: {
+						bar: true
+					}
+				}
 			});
 		});
 	});

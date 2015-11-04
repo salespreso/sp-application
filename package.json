@@ -28,7 +28,6 @@
       "lib": "lib"
     },
     "dependencies": {
-      "react": "npm:react@^0.14.0",
       "sp-log": "npm:sp-log@^1.1.8"
     },
     "devDependencies": {
@@ -37,8 +36,7 @@
       "baobab": "npm:baobab@^2.1.0",
       "bluebird": "npm:bluebird@^2.10.2",
       "core-js": "npm:core-js@^1.1.4",
-      "lodash": "npm:lodash@^3.10.1",
-      "react-router": "npm:react-router@^1.0.0-rc3"
+      "lodash": "npm:lodash@^3.10.1"
     }
   }
 }

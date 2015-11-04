@@ -1,41 +1,30 @@
-import React from "react";
-import {Route} from "react-router";
 import {ApplicationRunner} from "lib/runner";
 import {parent, application} from "lib/decorators";
-import {monkey} from "baobab";
-
-import {Log} from "sp-log";
-let log = Log("example");
 
 @application()
 class ParentApp {
 	static get routes() {
-		return (
-			<Route name="foo" />
-		);
+		return {
+			"/parent/": "opened",
+			"/parent/:id/": "detailOpened",
+			"/parent/create/": "createOpened"
+		};
+	}
+
+	static get signals() {
+		return {
+			opened: [],
+			detailOpened: [],
+			createOpened: []
+		};
 	}
 
 	static get store() {
 		return {
 			foo: true,
-			bar: false,
-			baz: {
-				hello: true
-			},
-			aCursor: monkey({
-				cursors: [],
-				get() {
-					return "hello";
-				}
-			}),
-			another: monkey({
-				cursors: {
-					foo: ["foo"]
-				},
-				get(data) {
-					return data.foo;
-				}
-			})
+			bar: {
+				baz: "baz"
+			}
 		};
 	}
 }
@@ -44,28 +33,35 @@ class ParentApp {
 @application()
 class ChildApp {
 	static get routes() {
-		return (
-			<Route name="bar" />
-		);
+		return {
+			"/parent/child/": "opened",
+			"/parent/child/:id/": "detailOpened",
+			"/parent/child/create/": "createOpened"
+		};
+	}
+
+	static get signals() {
+		return {
+			opened: [],
+			detailOpened: [],
+			createOpened: []
+		};
 	}
 
 	static get store() {
 		return {
-			testStore: {
-				foo: true,
-				bar: "baz"
-			},
-			hai: monkey({
-				cursors: {
-					foo: ["testStore", "foo"]
-				},
-				get(data) {
-					return data.foo;
-				}
-			})
+			foo: true,
+			bar: {
+				baz: "baz"
+			}
 		};
 	}
 }
 
-log.info(`routes: ${JSON.stringify(ApplicationRunner.createRoutes(), null, 2)}`);
-log.info(`stores: ${JSON.stringify(ApplicationRunner.createStore(), null, 2)}`);
+const routes = ApplicationRunner.createRoutes();
+const signals = ApplicationRunner.createSignals();
+const store = ApplicationRunner.createStore();
+
+log.info(`routes: ${JSON.stringify(routes, null, 2)}`);
+log.info(`signals: ${JSON.stringify(signals, null, 2)}`);
+log.info(`store: ${JSON.stringify(store, null, 2)}`);
