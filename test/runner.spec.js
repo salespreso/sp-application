@@ -61,6 +61,32 @@ describe("ApplicationRunner", () => {
 			});
 		});
 
+		it("should allow nested routes", () => {
+			class App1 {
+				static get routes() {
+					return {
+						"/routes": {
+							"/": "routeParent",
+							"/subroute": {
+								"/:id": "subrouteID"
+							}
+						}
+					}
+				}
+			}
+
+			ApplicationRunner.add("app1", App1);
+			const routes = ApplicationRunner.createRoutes();
+			assert.deepEqual(routes, {
+				"/routes": {
+					"/": "app1.routeParent",
+					"/subroute": {
+						"/:id": "app1.subrouteID"
+					}
+				}
+			});
+		});
+
 		it("should remove any unused routes", () => {
 			class App1 {}
 			ApplicationRunner.add("app1", App1);
