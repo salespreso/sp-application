@@ -46,9 +46,19 @@ it.
 //@application()
 class Foo {
   static get routes() {
-    <Route path="foos" component={MyComponent}>
-      <Route path=":id" component={MyComponentDetail} />
-    </Route>
+    return {
+      "/myfoos": {
+        "/": "openIndex",
+        "/:id": "openDetailPage"
+      }
+    };
+  }
+
+  static get signals() {
+    return {
+      "openIndex": [setPage],
+      "openDetailPage": [setPage, fetchStuff]
+    };
   }
 
   static get store() {
